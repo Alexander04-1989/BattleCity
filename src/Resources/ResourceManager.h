@@ -1,8 +1,9 @@
 #pragma once
 
-#include<string>
-#include<memory>
-#include<map>
+#include <string>
+#include <memory>
+#include <map>
+#include <vector>
 
 namespace Renderer
 {
@@ -24,13 +25,17 @@ public:
 
 	std::shared_ptr<Renderer::ShaderProgram> loadShaders(const std::string& shaderName, const std::string& vertexPath, const std::string& fragmentPath);
 	std::shared_ptr<Renderer::ShaderProgram> getShaderProgram(const std::string& shaderName);
-	std::shared_ptr<Renderer::Texture2D> loadTexture2D(const std::string& textureName, const std::string& texturePath);
-	std::shared_ptr<Renderer::Texture2D> getTexture2D(const std::string& textureName);
+	std::shared_ptr<Renderer::Texture2D> loadTexture(const std::string& textureName, const std::string& texturePath);
+	std::shared_ptr<Renderer::Texture2D> getTexture(const std::string& textureName);
 
 	std::shared_ptr<Renderer::Sprite> loadSprite(const std::string& spriteName, const std::string& textureName,
-												const std::string& shaderName, const unsigned int spriteWidth, const unsigned int spriteHeight);
+												 const std::string& shaderName, const unsigned int spriteWidth, 
+												 const unsigned int spriteHeight, const std::string& subTextureName = "default");
 	std::shared_ptr<Renderer::Sprite> getSprite(const std::string& spriteeName);
 
+	std::shared_ptr<Renderer::Texture2D> loadTextureAtlas(const std::string textureName, const std::string texturePath, 
+														  const std::vector<std::string> subTexures,
+														  const unsigned int subTextureWidth, const unsigned int subTextureHeight);
 private:
 	std::string getFileString(const std::string& relativefilePath) const;
 	typedef std::map<const std::string, std::shared_ptr<Renderer::ShaderProgram>>ShaderProgramsMap;
