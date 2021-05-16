@@ -8,7 +8,7 @@
 #include <memory>
 #include <string>
 
-namespace Renderer
+namespace RenderEngine
 {
 	class Texture2D;
 	class ShaderProgram;
@@ -42,6 +42,6 @@ namespace Renderer
 		VertexArray m_vertexArray;
 		VertexBuffer m_vertexCoordsBuffer;
 		VertexBuffer m_textureCoordsBuffer;
-		IndexBuffer m_IndexBuffer;
+		IndexBuffer m_indexBuffer;
 	};
 }
