@@ -12,7 +12,7 @@ namespace RenderEngine
 class BetonWall : public IGameObject
 {
 public:
-	enum class EBetonWallType
+	enum class EBetonWallType : uint8_t
 	{
 		All,
 		Top,
@@ -24,12 +24,12 @@ public:
 		BottomLeft,
 		BottomRight
 	};
-	enum class EBlockState
+	enum class EBlockState : uint8_t
 	{
 		Enabled = 0,
 		Destroyed
 	};
-	enum class EBlockLocation
+	enum class EBlockLocation : uint8_t
 	{
 		TopLeft,
 		TopRight,
