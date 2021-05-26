@@ -15,7 +15,7 @@ void glfwWindowSizeCallback(GLFWwindow* pWindow, int widht, int height)
     g_window_Size.x = widht;
     g_window_Size.y = height;
 
-    const float map_aspect_ratio = 13.f / 14.f;
+    const float map_aspect_ratio = static_cast<float>(g_game->getCurrentLewelWidth()) / g_game->getCurrentLewelHeight();
     unsigned int viewPortWidth = g_window_Size.x;
     unsigned int viewPortHeight = g_window_Size.y;
     unsigned int viewPortLeftOffset = 0;
@@ -76,17 +76,18 @@ int main(int args, char** argv)
 	{
 		std::cout << "Can't load GLAD" << std::endl;
 		return -1;
-	}
+	} 
 
     std::cout << "Renderer  " << RenderEngine::Renderer::getRendererStr() << std::endl;
 	std::cout << "OpenGL version " << RenderEngine::Renderer::getVersionStr() << std::endl;
 
     RenderEngine::Renderer::setClearColor( 0, 0, 0, 1);
     RenderEngine::Renderer::setDepthTest(true);
-
+     
     {
         ResourceManager::setExecutablePath(argv[0]);
         g_game->init();
+        glfwSetWindowSize(pWindow, static_cast<int>(g_game->getCurrentLewelWidth()), static_cast<int>(g_game->getCurrentLewelHeight()));
         auto lastTime = std::chrono::high_resolution_clock::now();
 
         /* Loop until the user closes the window */

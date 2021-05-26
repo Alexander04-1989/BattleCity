@@ -88,15 +88,24 @@ bool Game::init()
         return false;
     }
 
-   glm::mat4 projectionMatrix = glm::ortho(0.f, static_cast<float>(m_windowSize.x), 0.f, static_cast<float>(m_windowSize.y), -100.f, 100.f);
+    m_pLevel = std::make_unique<Level>(ResourceManager::getLevels()[1]);
+    m_windowSize.x = static_cast<int>(m_pLevel->getLewelWidth());
+    m_windowSize.y = static_cast<int>(m_pLevel->getLewelHeight());
+
+    glm::mat4 projectionMatrix = glm::ortho(0.f, static_cast<float>(m_windowSize.x), 0.f, static_cast<float>(m_windowSize.y), -100.f, 100.f);
 
     pSpriteShaderProgram->use();  
     pSpriteShaderProgram->setInt("tex", 0);
     pSpriteShaderProgram->setMatrix4("projectionMat", projectionMatrix); 
       
-    m_pTank = std::make_unique<Tank>(0.0000001f, glm::vec2(0), glm::vec2(16.f, 16.f), 0.f);
-
-    m_pLevel = std::make_unique<Level>(ResourceManager::getLevels()[1]);
-
+    m_pTank = std::make_unique<Tank>(0.0000001f, glm::vec2(0), glm::vec2(16.f, 16.f), 0.f); 
     return true;  
 } 
+size_t Game::getCurrentLewelWidth() const
+{
+    return m_pLevel->getLewelWidth();
+}
+size_t Game::getCurrentLewelHeight() const
+{
+    return m_pLevel->getLewelHeight();
+}

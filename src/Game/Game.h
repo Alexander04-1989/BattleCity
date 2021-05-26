@@ -16,6 +16,8 @@ public:
 	void update(const uint64_t delta);
 	void setKey(const int key, const int action);
 	bool init();
+	size_t getCurrentLewelWidth() const;
+	size_t getCurrentLewelHeight() const;
 
 private:
 	std::array<bool, 349> m_keys;
