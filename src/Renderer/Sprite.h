@@ -36,7 +36,11 @@ namespace RenderEngine
 
 		Sprite(const Sprite&) = delete;
 		Sprite& operator = (const Sprite&) = delete;
-		void render(const glm::vec2& position, const glm::vec2& size, const float rotation, const size_t frameID = 0) const;
+		void render(const glm::vec2& position, 
+					const glm::vec2& size, 
+					const float rotation, 
+					const float layer = 0.f,
+					const size_t frameID = 0) const;
 
 		void insertFrames(std::vector<FrameDescription> FramesDescriptions);
 		uint64_t getFrameDuration(const size_t frameId) const;
