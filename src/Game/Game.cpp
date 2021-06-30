@@ -9,6 +9,7 @@
 #include "GameObjects/Tank.h"
 #include <GLFW/glfw3.h>
 #include "Level.h"
+#include "../Physics/PhysicsEngine.h"
 
 Game::Game(const glm::ivec2& windowSize)
     :m_eCurrentGameState(EGameState::Active),
@@ -46,26 +47,26 @@ void Game::update(const double delta)
         if (m_keys[GLFW_KEY_W])
         {
             m_pTank->setOrientation(Tank::EOrientation::Top);
-            m_pTank->move(true);
+            m_pTank->setVelocity(m_pTank->getMaxVelocity());
         }
         else if (m_keys[GLFW_KEY_A])
         {
             m_pTank->setOrientation(Tank::EOrientation::Left);
-            m_pTank->move(true);
+            m_pTank->setVelocity(m_pTank->getMaxVelocity());
         }
         else if (m_keys[GLFW_KEY_D])
         {
             m_pTank->setOrientation(Tank::EOrientation::Right);
-            m_pTank->move(true);
+            m_pTank->setVelocity(m_pTank->getMaxVelocity());
         }
         else if (m_keys[GLFW_KEY_S])
         {
             m_pTank->setOrientation(Tank::EOrientation::Bottom);
-            m_pTank->move(true);
+            m_pTank->setVelocity(m_pTank->getMaxVelocity());
         }
         else
         {
-            m_pTank->move(false);
+            m_pTank->setVelocity(0);
         }
 
         m_pTank->update(delta);
@@ -88,7 +89,7 @@ bool Game::init()
         return false;
     }
 
-    m_pLevel = std::make_unique<Level>(ResourceManager::getLevels()[0]);
+    m_pLevel = std::make_shared<Level>(ResourceManager::getLevels()[0]);
     m_windowSize.x = static_cast<int>(m_pLevel->getLewelWidth());
     m_windowSize.y = static_cast<int>(m_pLevel->getLewelHeight());
 
@@ -98,7 +99,8 @@ bool Game::init()
     pSpriteShaderProgram->setInt("tex", 0);
     pSpriteShaderProgram->setMatrix4("projectionMat", projectionMatrix); 
       
-    m_pTank = std::make_unique<Tank>(0.05, m_pLevel->getPlayerRespawn_1(), glm::vec2(Level::BLOCK_SIZE, Level::BLOCK_SIZE), 0.f);
+    m_pTank = std::make_shared<Tank>(0.05, m_pLevel->getPlayerRespawn_1(), glm::vec2(Level::BLOCK_SIZE, Level::BLOCK_SIZE), 0.f);
+    PhysicsEngine::addDynamicGameObject(m_pTank);
     return true;  
 } 
 size_t Game::getCurrentLewelWidth() const

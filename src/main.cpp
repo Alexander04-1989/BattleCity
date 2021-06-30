@@ -6,6 +6,7 @@
 #include "Game/Game.h"
 #include "Resources/ResourceManager.h"
 #include "Renderer/Renderer.h"
+#include "Physics/PhysicsEngine.h"
 
 glm::ivec2 g_window_Size(13 * 16, 14 * 16);
 std::unique_ptr<Game> g_game = std::make_unique<Game>(g_window_Size);
@@ -86,6 +87,7 @@ int main(int args, char** argv)
      
     {
         ResourceManager::setExecutablePath(argv[0]);
+        PhysicsEngine::init();
         g_game->init();
         glfwSetWindowSize(pWindow, static_cast<int>(2 * g_game->getCurrentLewelWidth()), static_cast<int>(2 * g_game->getCurrentLewelHeight()));
         auto lastTime = std::chrono::high_resolution_clock::now();
@@ -97,6 +99,7 @@ int main(int args, char** argv)
             double duration = std::chrono::duration<double, std::milli>(currentTime - lastTime).count();
             lastTime = currentTime;
             g_game->update(duration);
+            PhysicsEngine::update(duration);
 
             /* Render here */
             RenderEngine::Renderer::clear();
