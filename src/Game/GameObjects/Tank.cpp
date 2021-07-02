@@ -74,7 +74,7 @@ void Tank::render() const
 			}
 		if (m_hasShield)
 		{
-			m_pSprite_shield->render(m_position, m_size, m_rotation, m_layer, m_spriteAnimator_shield.getCurrentFrame());
+			m_pSprite_shield->render(m_position, m_size, m_rotation, m_layer + 0.1f, m_spriteAnimator_shield.getCurrentFrame());
 		}
 	}
 	
