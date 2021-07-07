@@ -7,6 +7,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/mat4x4.hpp>
 #include "GameObjects/Tank.h"
+#include "GameObjects/Bullet.h"
 #include <GLFW/glfw3.h>
 #include "Level.h"
 #include "../Physics/PhysicsEngine.h"
@@ -69,6 +70,11 @@ void Game::update(const double delta)
             m_pTank->setVelocity(0);
         }
 
+        if (m_pTank && m_keys[GLFW_KEY_SPACE])
+        {
+            m_pTank->fire();
+        }
+
         m_pTank->update(delta);
     }
 }
@@ -89,7 +95,7 @@ bool Game::init()
         return false;
     }
 
-    m_pLevel = std::make_shared<Level>(ResourceManager::getLevels()[0]);
+    m_pLevel = std::make_shared<Level>(ResourceManager::getLevels()[1]);
     m_windowSize.x = static_cast<int>(m_pLevel->getLewelWidth());
     m_windowSize.y = static_cast<int>(m_pLevel->getLewelHeight());
     Physics::PhysicsEngine::setCurrentLevel(m_pLevel);
