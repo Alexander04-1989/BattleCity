@@ -181,5 +181,22 @@ std::vector<std::shared_ptr<IGameObject>> Level::getObjectsInArea(const glm::vec
         }
     }
 
+	if (endX >= m_widthBlocks)
+	{
+		output.push_back(m_levelObjects[m_levelObjects.size() - 1]);
+	}
+	if (startX <= 1)
+	{
+		output.push_back(m_levelObjects[m_levelObjects.size() - 2]);
+	}
+	if (startY <= 1)
+	{
+		output.push_back(m_levelObjects[m_levelObjects.size() - 3]);
+	}
+	if (endY >= m_widthBlocks)
+	{
+		output.push_back(m_levelObjects[m_levelObjects.size() - 4]);
+	}
+
     return output;
 }

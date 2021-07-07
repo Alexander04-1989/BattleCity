@@ -12,8 +12,8 @@
 #include "../Physics/PhysicsEngine.h"
 
 Game::Game(const glm::ivec2& windowSize)
-    :m_eCurrentGameState(EGameState::Active),
-    m_windowSize(windowSize)
+    :m_windowSize(windowSize)
+    ,m_eCurrentGameState(EGameState::Active)
 {
     m_keys.fill(false);
 }
