@@ -87,7 +87,7 @@ int main(int args, char** argv)
      
     {
         ResourceManager::setExecutablePath(argv[0]);
-        PhysicsEngine::init();
+        Physics::PhysicsEngine::init();
         g_game->init();
         glfwSetWindowSize(pWindow, static_cast<int>(2 * g_game->getCurrentLewelWidth()), static_cast<int>(2 * g_game->getCurrentLewelHeight()));
         auto lastTime = std::chrono::high_resolution_clock::now();
@@ -95,11 +95,14 @@ int main(int args, char** argv)
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(pWindow))
         {
+            /* Poll for and process events */
+            glfwPollEvents();
+
             auto currentTime = std::chrono::high_resolution_clock::now();
             double duration = std::chrono::duration<double, std::milli>(currentTime - lastTime).count();
             lastTime = currentTime;
             g_game->update(duration);
-            PhysicsEngine::update(duration);
+            Physics::PhysicsEngine::update(duration);
 
             /* Render here */
             RenderEngine::Renderer::clear();
@@ -107,11 +110,9 @@ int main(int args, char** argv)
             g_game->render();
 
             /* Swap front and back buffers */
-            glfwSwapBuffers(pWindow);
-
-            /* Poll for and process events */
-            glfwPollEvents();
+            glfwSwapBuffers(pWindow);        
         }
+        Physics::PhysicsEngine::terminate();
         g_game = nullptr;
         ResourceManager::unloadAllResources();
     }
